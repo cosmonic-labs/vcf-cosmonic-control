@@ -1,0 +1,28 @@
+apiVersion: control.cosmonic.io/v1alpha1
+kind: HTTPTrigger
+metadata:
+  name: petstore-mcp
+  namespace: cosmonic
+spec:
+  ingress:
+    host: petstore-mcp.vcf-wasm.cosmonic.world
+    paths:
+    - path: /
+      pathType: Prefix
+  replicas: 1
+  template:
+    spec:
+      components:
+      - image: ghcr.io/cosmonic-labs/petstore-mcp-server:v0.2.0
+        name: petstore-mcp
+      hostInterfaces:
+      - interfaces:
+        - logging
+        namespace: wasi
+        package: logging
+        version: 0.1.0-draft
+      - interfaces:
+        - store
+        namespace: wasi
+        package: config
+        version: 0.2.0-rc.1

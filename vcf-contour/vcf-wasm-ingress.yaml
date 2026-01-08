@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vcf-wasm-ingress
+  namespace: cosmonic-system
+  annotations:
+    cert-manager.io/cluster-issuer: selfsigned-issuer
+spec:
+  tls:
+  - secretName: vcf-wasm-secret
+    hosts:
+      - "*.vcf-wasm.cosmonic.world"
+  rules:
+  - host: "*.vcf-wasm.cosmonic.world"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ingress
+            port:
+              number: 80

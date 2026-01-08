@@ -1,0 +1,184 @@
+# certificates:
+#   caDuration: 8760h
+#   caRenewBefore: 720h
+#   leafDuration: 720h
+#   leafRenewBefore: 360h
+# contour:
+#   disableGRPCRoutes: true
+#   listenIPFamily: IPv6
+#   logLevel: info
+#   pspNames: vmware-system-restricted
+#   replicas: 2
+#   resources:
+#     contour:
+#       limits:
+#         cpu: ""
+#         memory: ""
+#       requests:
+#         cpu: 128m
+#         memory: 256Mi
+#   service:
+#     ipFamilies: []
+#     ipFamilyPolicy: ""
+#   useProxyProtocol: false
+# enableSupervisorServiceRbac: false
+# envoy:
+#   bootstrap:
+#     overloadManager:
+#       downstreamMaxConnections: 0
+#       maxHeap: 0
+#   hostNetwork: false
+#   hostPorts:
+#     enable: true
+#     http: 80
+#     https: 443
+#   listenIPFamily: IPv6
+#   logLevel: info
+#   pspNames: ""
+#   service:
+#     aws:
+#       LBType: classic
+#     disableWait: false
+#     externalTrafficPolicy: ""
+#     ipFamilies: []
+#     ipFamilyPolicy: ""
+#     loadBalancerIP: ""
+#     loadBalancerTLSTermination: false
+#     nodePorts:
+#       http: 0
+#       https: 0
+#     type: ""
+#   terminationGracePeriodSeconds: 300
+#   workload:
+#     replicas: 2
+#     resources:
+#       envoy:
+#         limits:
+#           cpu: ""
+#           memory: ""
+#         requests:
+#           cpu: 128m
+#           memory: 256Mi
+#       envoyInitConfig:
+#         limits:
+#           cpu: ""
+#           memory: ""
+#         requests:
+#           cpu: 128m
+#           memory: 256Mi
+#       shutdownManager:
+#         limits:
+#           cpu: ""
+#           memory: ""
+#         requests:
+#           cpu: 10m
+#           memory: 16Mi
+#     type: DaemonSet
+# infrastructure_provider: vsphere
+# kubernetes_distribution: ""
+# kubernetes_version: 0.0.0
+# namespace: tanzu-system-ingress
+# nsLimitRange:
+#   defaultLimits:
+#     cpu: ""
+#     memory: ""
+#   defaultRequests:
+#     cpu: 128m
+#     memory: 256Mi
+# priorityClassName: ""
+# registry_secret_names:
+#   - contour-reg-creds
+---
+infrastructure_provider: vsphere
+namespace: tanzu-system-ingress
+# kubernetes_distribution: ""
+# kubernetes_version: 0.0.0
+certificates:
+  caDuration: 8760h
+  caRenewBefore: 720h
+  leafDuration: 720h
+  leafRenewBefore: 360h
+contour:
+#   disableGRPCRoutes: true
+#   listenIPFamily: IPv6
+  logLevel: info
+  pspNames: vmware-system-restricted
+  replicas: 2
+#   resources:
+#     contour:
+#       limits:
+#         cpu: ""
+#         memory: ""
+#       requests:
+#         cpu: 128m
+#         memory: 256Mi
+#   service:
+#     ipFamilies: []
+#     ipFamilyPolicy: ""
+  useProxyProtocol: false
+  configFileContents: {}
+# enableSupervisorServiceRbac: false
+envoy:
+#   bootstrap:
+#     overloadManager:
+#       downstreamMaxConnections: 0
+#       maxHeap: 0
+  hostNetwork: false
+  hostPorts:
+    enable: true
+    http: 80
+    https: 443
+#   listenIPFamily: IPv6
+  logLevel: info
+#   pspNames: ""
+  service:
+#     aws:
+#       LBType: classic
+    disableWait: false
+    externalTrafficPolicy: Cluster
+#     ipFamilies: []
+#     ipFamilyPolicy: ""
+#     loadBalancerIP: ""
+#     loadBalancerTLSTermination: false
+#     nodePorts:
+#       http: 0
+#       https: 0
+    type: LoadBalancer
+    annotations: {}
+#   terminationGracePeriodSeconds: 300
+#   workload:
+#     replicas: 2
+#     resources:
+#       envoy:
+#         limits:
+#           cpu: ""
+#           memory: ""
+#         requests:
+#           cpu: 128m
+#           memory: 256Mi
+#       envoyInitConfig:
+#         limits:
+#           cpu: ""
+#           memory: ""
+#         requests:
+#           cpu: 128m
+#           memory: 256Mi
+#       shutdownManager:
+#         limits:
+#           cpu: ""
+#           memory: ""
+#         requests:
+#           cpu: 10m
+#           memory: 16Mi
+#     type: DaemonSet
+
+# nsLimitRange:
+#   defaultLimits:
+#     cpu: ""
+#     memory: ""
+#   defaultRequests:
+#     cpu: 128m
+#     memory: 256Mi
+# priorityClassName: ""
+# registry_secret_names:
+#   - contour-reg-creds

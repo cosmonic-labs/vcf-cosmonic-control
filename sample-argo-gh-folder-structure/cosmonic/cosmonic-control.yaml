@@ -1,0 +1,56 @@
+# Using a Cluster Generator selector noted below. This assumes that clusters that want to run Wasm workloads should have a label `wasmWorkloads=true`.
+# The Cosmonic Control Console ApplicationSet should be deployed just once per cluster.
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cosmonic-control-console
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  # using the generator / cluster selector for choosing which clusters that will have wasm workloads
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          wasmWorkloads: true
+  template:
+    metadata:
+      name: '{{.name}}-console'
+      namespace: argocd
+    spec:
+      project: default
+      source:
+        chart: cosmonic-control
+        repoURL: oci://ghcr.io/cosmonic/cosmonic-control
+        targetRevision: 0.3.0
+        helm:
+          values: |
+            cosmonicLicenseKey: "not-a-valid-license"
+            hostName: "https://vcf.cosmonic.world"
+            envoy:
+              service:
+                type: ClusterIP
+      destination:
+        # the .server variable is set from the cluster generator
+        server: '{{.server}}'
+        namespace: cosmonic-system
+      ignoreDifferences:
+        - group: apps
+          kind: Deployment
+          jsonPointers:
+            - /spec/replicas
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - ServerSideApply=true
+          - CreateNamespace=true
+          - RespectIgnoreDifferences=true
+        retry:
+          limit: -1
+          backoff:
+            duration: 30s
+            factor: 2
+            maxDuration: 5m

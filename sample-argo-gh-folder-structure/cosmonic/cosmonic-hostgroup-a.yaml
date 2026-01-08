@@ -1,0 +1,47 @@
+# The Cosmonic Control Hostgroup ApplicationSet should be deployed at least once per cluster.
+# Typically you can have different hostgroups in the same cluster depending on the additional sandboxing requirements (gpu vs cpu, etc)
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cosmonic-control-hostgroup
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  # Same as the Console ApplicationSet, using the generator / cluster selector for choosing which clusters that will have wasm workloads
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          wasmWorkloads: true
+  template:
+    metadata:
+      name: '{{.name}}-control-hostgroup'
+    spec:
+      project: default
+      source:
+        chart: cosmonic-control
+        repoURL: oci://ghcr.io/cosmonic/cosmonic-control-hostgroup
+        targetRevision: 0.3.0
+      destination:
+        server: '{{.server}}'
+        namespace: cosmonic-system
+      ignoreDifferences:
+        - group: apps
+          kind: Deployment
+          jsonPointers:
+            - /spec/replicas
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - ServerSideApply=true
+          - CreateNamespace=true
+          - RespectIgnoreDifferences=true
+        retry:
+          limit: -1
+          backoff:
+            duration: 30s
+            factor: 2
+            maxDuration: 5m

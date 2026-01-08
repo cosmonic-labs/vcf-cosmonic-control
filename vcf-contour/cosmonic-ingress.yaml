@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-console
+  namespace: cosmonic-system
+  annotations:
+    cert-manager.io/cluster-issuer: selfsigned-issuer
+spec:
+  tls:
+  - secretName: console-tls-secret
+    hosts:
+      - console.vcf.cosmonic.world
+  rules:
+  - host: console.vcf.cosmonic.world
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: console
+            port:
+              number: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-perses
+  namespace: cosmonic-system
+  annotations:
+    cert-manager.io/cluster-issuer: selfsigned-issuer
+spec:
+  tls:
+  - secretName: perses-tls-secret
+    hosts:
+      - perses.vcf.cosmonic.world
+  rules:
+  - host: perses.vcf.cosmonic.world
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: perses
+            port:
+              number: 8080

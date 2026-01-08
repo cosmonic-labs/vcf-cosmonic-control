@@ -1,0 +1,72 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-nihao
+  annotations:
+    cert-manager.io/cluster-issuer: selfsigned-issuer
+spec:
+  tls:
+  - secretName: nihao-secret
+    hosts:
+      - www.vcf.cosmonic.world
+  rules:
+  - host: www.vcf.cosmonic.world
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nihao
+            port:
+              number: 80
+# apiVersion: projectcontour.io/v1
+# kind: HTTPProxy
+# metadata:
+#   name: nihao-demo
+#   namespace: default
+# spec:
+#   virtualhost:
+#       fqdn: "nihao.vcf.cosmonic.world"
+#   routes:
+#   - services:
+#       - name: nihao
+#         port: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nihao
+spec:
+  selector:
+    app: nihao
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nihao
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nihao
+      tier: backend
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: nihao
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: nihao
+          image: "gcr.io/google-samples/hello-go-gke:1.0"
+          ports:
+            - name: http
+              containerPort: 80

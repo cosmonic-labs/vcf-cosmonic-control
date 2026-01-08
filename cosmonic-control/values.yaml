@@ -1,0 +1,22 @@
+nexus:
+  image:
+    tag: canary
+
+operator:
+  image:
+    tag: canary
+
+console:
+  image:
+    tag: canary
+
+console_ui:
+  enabled: false
+  image:
+    tag: canary
+
+envoy:
+  service:
+    type: ClusterIP
+
+hostName: "http://console.vcf.cosmonic.world"

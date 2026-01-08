@@ -1,0 +1,34 @@
+apiVersion: control.cosmonic.io/v1alpha1
+kind: HTTPTrigger
+metadata:
+  name: welcome-tour-test
+  namespace: default
+spec:
+  deployPolicy: RollingUpdate
+  ingress:
+    host: welcome-tour.vcf-wasm.cosmonic.world
+    paths:
+    - path: /
+      pathType: Prefix
+  replicas: 1
+  template:
+    spec:
+      components:
+      - image: ghcr.io/cosmonic-labs/components/welcome-tour:0.1.0
+        localResources:
+          environment:
+            config:
+              consolehost: http://console.vcf.cosmonic.world
+              consoleport: "8080"
+        name: welcome-tour
+      hostInterfaces:
+      - interfaces:
+        - logging
+        namespace: wasi
+        package: logging
+        version: 0.1.0-draft
+      - interfaces:
+        - store
+        namespace: wasi
+        package: config
+        version: 0.2.0-rc.1
