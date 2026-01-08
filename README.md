@@ -4,11 +4,11 @@ This repository provides instructions for installing Cosmonic Control on a VMwar
 
 ## Overview
 
-This installation process includes the following components:
+This installation process includes the following steps:
 
-1. Deploys the Cosmonic Control and Cosmonic Control Hostgroup Helm charts
-2. Configures Contour ingress to route subdomains to the Cosmonic Envoy service for xDS-based Wasm workload routing
-3. Sets up Contour ingress to the Cosmonic Perses UI for OpenTelemetry (OTEL) querying and monitoring
+1. Deploy the Cosmonic Control and Cosmonic Control Hostgroup Helm charts
+2. Configure Contour ingress to route subdomains to the Cosmonic Envoy service for xDS-based Wasm workload routing
+3. Set up Contour ingress to the Cosmonic Perses UI for OpenTelemetry (OTEL) querying and monitoring
 
 ## Prerequisites
 
