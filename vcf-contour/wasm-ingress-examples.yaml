@@ -1,0 +1,51 @@
+# This YAML file provides example Ingress resources for routing traffic to different services
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: examples
+  namespace: cosmonic
+  annotations:
+    cert-manager.io/cluster-issuer: selfsigned-issuer
+spec:
+  tls:
+  - secretName: example-tls-secret
+    # hosts specified here must match those in the rules below
+    hosts:
+      - "demo.vcf-wasm.cosmonic.world"
+      - "pathexample.vcf-wasm.cosmonic.world"
+  rules:
+  # example host for demo.vcf-wasm.cosmonic.world to route to the wasm ingress service for all paths
+  # Note the HTTPTrigger resources must also specify this host to properly route traffic in the ingress:host spec
+  - host: "demo.vcf-wasm.cosmonic.world"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ingress
+            port:
+              number: 80
+  # example host for pathexample.vcf-wasm.cosmonic.world to route /llm to the wasm ingress service and all other paths to example-service
+  # Note the HTTPTrigger resources must also specify this host to properly route traffic in the ingress:host spec, as well as the /llm path
+  - host: "pathexample.vcf-wasm.cosmonic.world"
+    http:
+      paths:
+      - path: /llm
+        pathType: Prefix
+        backend:
+          service:
+            name: ingress
+            port:
+              number: 80
+  # this path routes all other traffic for pathexample.vcf-wasm.cosmonic.world to example-service
+  - host: "pathexample.vcf-wasm.cosmonic.world"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: example-service
+            port:
+              number: 80

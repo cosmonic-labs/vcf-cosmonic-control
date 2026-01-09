@@ -1,10 +1,12 @@
-# Cosmonic Control on VMware VCF
+# Cosmonic Control on VMware Cloud Foundation (VCF)
 
-This repository provides instructions for installing Cosmonic Control on a VMware VCF Kubernetes cluster, enabling the cluster to run both traditional pod deployments and WebAssembly (Wasm) workloads.
+This repository provides instructions for installing Cosmonic Control on a VCF Kubernetes cluster, enabling the cluster to run both traditional pod deployments and WebAssembly (Wasm) workloads.
+
+For an overview of the Cosmonic Control architecture, refer to the [Cosmonic Architecture Documentation](https://docs.cosmonic.com/architecture)
 
 ## Overview
 
-This installation process includes the following steps:
+This installation process for Cosmonic Control on VCF includes the following steps:
 
 1. Deploy the Cosmonic Control and Cosmonic Control Hostgroup Helm charts
 2. Configure Contour ingress to route subdomains to the Cosmonic Envoy service for xDS-based Wasm workload routing
@@ -95,6 +97,8 @@ The [vcf-contour](vcf-contour/) folder contains ingress configurations for integ
 **[vcf-contour/cosmonic-ingress.yaml](vcf-contour/cosmonic-ingress.yaml):** Configures ingress for the Cosmonic Console and Perses UI in the `cosmonic-system` namespace. The default hostnames are `console.vcf.cosmonic.world` and `perses.vcf.cosmonic.world`. For testing, you may use `localhost.cosmonic.sh` which resolves to 127.0.0.1.
 
 **[vcf-contour/vcf-wasm-ingress.yaml](vcf-contour/vcf-wasm-ingress.yaml):** Routes all `*.vcf-wasm.cosmonic.world` traffic to the Cosmonic Envoy ingress service. For production environments, consider specifying individual hosts instead of wildcards to reduce invalid hostname requests.
+
+**[vcf-contour/wasm-ingress-examples.yaml](vcf-contour/wasm-ingress-examples.yaml):** Contains examples for specific domain routing as well as path-based routing to a Wasm workload. This can be used for when an application is containerized, but has components that are Sandboxed/Wasm workloads as well.
 
 ### Option 2: ArgoCD Installation
 
