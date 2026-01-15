@@ -1,12 +1,12 @@
-# Cosmonic Control on VMware Cloud Foundation (VCF)
+# Cosmonic Control on a VKS cluster
 
-This repository provides instructions for installing Cosmonic Control on a VCF Kubernetes cluster, enabling the cluster to run both traditional pod deployments and WebAssembly (Wasm) workloads.
+This repository provides instructions for installing Cosmonic Control on a VKS cluster, enabling the cluster to run both traditional pod deployments and WebAssembly (Wasm) workloads.
 
 For an overview of the Cosmonic Control architecture, refer to the [Cosmonic Architecture Documentation](https://docs.cosmonic.com/architecture)
 
 ## Overview
 
-This installation process for Cosmonic Control on VCF includes the following steps:
+This installation process for Cosmonic Control on VKS includes the following steps:
 
 1. Deploy the Cosmonic Control and Cosmonic Control Hostgroup Helm charts
 2. Configure Contour ingress to route subdomains to the Cosmonic Envoy service for xDS-based Wasm workload routing
@@ -20,12 +20,12 @@ Before installing Cosmonic Control, ensure that Contour is configured as an ingr
 
 1. **Add VKS standard packages:**
    ```bash
-   vcf package repository add vks-repo --url projects.packages.broadcom.com/vsphere/supervisor/packages/2025.10.22/vks-standard-packages:3.5.0-20251022 -n packages
+   vcf addon repository add vks-repo --url projects.packages.broadcom.com/vsphere/supervisor/packages/2025.10.22/vks-standard-packages:3.5.0-20251022 -n packages
    ```
 
 2. **Install Cert-Manager:**
    ```bash
-   vcf package install cert-manager -p cert-manager.kubernetes.vmware.com --version 1.18.2+vmware.2-vks.2 -n packages
+   vcf addon install cert-manager -p cert-manager.kubernetes.vmware.com --version 1.18.2+vmware.2-vks.2 -n packages
    ```
 
 3. **Install Contour:**
@@ -34,14 +34,14 @@ Before installing Cosmonic Control, ensure that Contour is configured as an ingr
 
    Retrieve and customize the default values file:
    ```bash
-   vcf package available get contour.kubernetes.vmware.com/1.33.0+vmware.1-vks.1 --default-values-file-output contour-data-values.yaml -n packages
+   vcf addon available get contour.kubernetes.vmware.com/1.33.0+vmware.1-vks.1 --default-values-file-output contour-data-values.yaml -n packages
    ```
 
    A sample configuration is available in [vcf-contour/contour-data-values.yaml](vcf-contour/contour-data-values.yaml).
 
    Install Contour with the customized values:
    ```bash
-   vcf package install contour -p contour.kubernetes.vmware.com --version 1.33.0+vmware.1-vks.1 --values-file contour-data-values.yaml -n packages
+   vcf addon install contour -p contour.kubernetes.vmware.com --version 1.33.0+vmware.1-vks.1 --values-file contour-data-values.yaml -n packages
    ```
 
 ## Installing Cosmonic Control
@@ -52,15 +52,14 @@ Refer to the [Cosmonic Control documentation](https://docs.cosmonic.com/install-
 
 #### Basic Installation (Without Console UI)
 
-Install Cosmonic Control with a NodePort service for the Envoy proxy:
+Install Cosmonic Control with a Cluster IP service for the Envoy proxy:
 
 ```bash
 helm install cosmonic-control oci://ghcr.io/cosmonic/cosmonic-control \
   --version 0.3.0 \
   --namespace cosmonic-system \
   --create-namespace \
-  --set envoy.service.type=NodePort \
-  --set envoy.service.httpNodePort=30950 \
+  --set envoy.service.type=ClusterIP \
   --set cosmonicLicenseKey="<insert-license-key>"
 ```
 
@@ -73,8 +72,7 @@ helm install cosmonic-control oci://ghcr.io/cosmonic/cosmonic-control \
   --version 0.3.0 \
   --namespace cosmonic-system \
   --create-namespace \
-  --set envoy.service.type=NodePort \
-  --set envoy.service.httpNodePort=30950 \
+  --set envoy.service.type=ClusterIP \
   --set cosmonicLicenseKey="<insert-license-key>" \
   --set hostName="console.localhost.cosmonic.sh" \
   --set console_ui.enabled=true
