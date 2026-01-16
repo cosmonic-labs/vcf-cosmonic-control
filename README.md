@@ -17,8 +17,10 @@ This installation process for Cosmonic Control on VKS includes the following ste
 Before installing Cosmonic Control, ensure that Contour is configured as an ingress controller and Cert-Manager is installed (recommended for TLS support).
 
 ### VCF Cluster Setup
+  VKS makes it easy for extending your cluster by using the `vcf addons` command. Additional informmation can be found at [View Available Add-ons using the VCF CLI](https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vsphere-supervisor-services-and-standalone-components/latest/managing-vsphere-kuberenetes-service-clusters-and-workloads/managing-add-ons-in-vks-clusters/view-available-add-ons-using-the-vcf-cli.html)
 
-1. **Add VKS standard packages:**
+
+1. **Add VKS standard Add-ons:**
    ```bash
    vcf addon repository add vks-repo --url projects.packages.broadcom.com/vsphere/supervisor/packages/2025.10.22/vks-standard-packages:3.5.0-20251022 -n packages
    ```
