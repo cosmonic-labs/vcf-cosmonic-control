@@ -60,7 +60,7 @@ Install Cosmonic Control with a Cluster IP service for the Envoy proxy:
 
 ```bash
 helm install cosmonic-control oci://ghcr.io/cosmonic/cosmonic-control \
-  --version 0.3.0 \
+  --version 0.8.1 \
   --namespace cosmonic-system \
   --create-namespace \
   --set envoy.service.type=ClusterIP \
@@ -73,7 +73,7 @@ To enable the Cosmonic Control Console UI, configure the `console_ui.enabled` an
 
 ```bash
 helm install cosmonic-control oci://ghcr.io/cosmonic/cosmonic-control \
-  --version 0.3.0 \
+  --version 0.8.1 \
   --namespace cosmonic-system \
   --create-namespace \
   --set envoy.service.type=ClusterIP \
@@ -86,7 +86,7 @@ helm install cosmonic-control oci://ghcr.io/cosmonic/cosmonic-control \
 
 ```bash
 helm install hostgroup oci://ghcr.io/cosmonic/cosmonic-control-hostgroup \
-  --version 0.3.0 \
+  --version 0.8.1 \
   --namespace cosmonic-system
 ```
 
