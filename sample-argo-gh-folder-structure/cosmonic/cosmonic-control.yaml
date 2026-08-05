@@ -23,7 +23,7 @@ spec:
       source:
         chart: cosmonic-control
         repoURL: oci://ghcr.io/cosmonic/cosmonic-control
-        targetRevision: 0.3.0
+        targetRevision: ">=0.8.1"
         helm:
           values: |
             cosmonicLicenseKey: "not-a-valid-license"
