@@ -1,5 +1,5 @@
 # Using a Cluster Generator selector noted below. This assumes that clusters that want to run Wasm workloads should have a label `wasmWorkloads=true`.
-# The Cosmonic Control Console ApplicationSet should be deployed just once per cluster.
+# The Cosmonic Control ApplicationSet should be deployed just once per cluster.
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:

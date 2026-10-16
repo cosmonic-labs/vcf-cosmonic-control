@@ -54,7 +54,7 @@ Refer to the [Cosmonic Control documentation](https://docs.cosmonic.com/install-
 
 ### Option 1: Helm Installation
 
-#### Basic Installation (Without Console UI)
+#### Basic Installation
 
 Install Cosmonic Control with a Cluster IP service for the Envoy proxy:
 
@@ -65,21 +65,6 @@ helm install cosmonic-control oci://ghcr.io/cosmonic/cosmonic-control \
   --create-namespace \
   --set envoy.service.type=ClusterIP \
   --set cosmonicLicenseKey="<insert-license-key>"
-```
-
-#### Installation With Console UI
-
-To enable the Cosmonic Control Console UI, configure the `console_ui.enabled` and `hostName` parameters. A sample values file is available in [cosmonic-control/values.yaml](cosmonic-control/values.yaml).
-
-```bash
-helm install cosmonic-control oci://ghcr.io/cosmonic/cosmonic-control \
-  --version 0.8.1 \
-  --namespace cosmonic-system \
-  --create-namespace \
-  --set envoy.service.type=ClusterIP \
-  --set cosmonicLicenseKey="<insert-license-key>" \
-  --set hostName="console.localhost.cosmonic.sh" \
-  --set console_ui.enabled=true
 ```
 
 #### Install Cosmonic Control Hostgroup
@@ -96,7 +81,7 @@ The [vcf-contour](vcf-contour/) folder contains ingress configurations for integ
 
 **[vcf-contour/vcf-nihao-example-deployment.yaml](vcf-contour/vcf-nihao-example-deployment.yaml):** This example demonstrates basic Contour ingress functionality. Refer to the [VMware Contour ingress documentation](https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vsphere-supervisor-services-and-standalone-components/latest/managing-vsphere-kuberenetes-service-clusters-and-workloads/deploying-workloads-on-tkg-service-clusters/ingress-using-contour.html) for implementation details.
 
-**[vcf-contour/cosmonic-ingress.yaml](vcf-contour/cosmonic-ingress.yaml):** Configures ingress for the Cosmonic Console and Perses UI in the `cosmonic-system` namespace. The default hostnames are `console.vcf.cosmonic.world` and `perses.vcf.cosmonic.world`. For testing, you may use `localhost.cosmonic.sh` which resolves to 127.0.0.1.
+**[vcf-contour/cosmonic-ingress.yaml](vcf-contour/cosmonic-ingress.yaml):** Configures ingress for the Perses UI in the `cosmonic-system` namespace. The default hostname is `perses.vcf.cosmonic.world`. For testing, you may use `localhost.cosmonic.sh` which resolves to 127.0.0.1.
 
 **[vcf-contour/vcf-wasm-ingress.yaml](vcf-contour/vcf-wasm-ingress.yaml):** Routes all `*.vcf-wasm.cosmonic.world` traffic to the Cosmonic Envoy ingress service. For production environments, consider specifying individual hosts instead of wildcards to reduce invalid hostname requests.
 

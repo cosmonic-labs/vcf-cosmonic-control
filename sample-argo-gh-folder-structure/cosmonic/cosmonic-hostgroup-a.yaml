@@ -8,7 +8,7 @@ metadata:
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
-  # Same as the Console ApplicationSet, using the generator / cluster selector for choosing which clusters that will have wasm workloads
+  # Same as the Cosmonic Control ApplicationSet, using the generator / cluster selector for choosing which clusters that will have wasm workloads
   generators:
   - clusters:
       selector:

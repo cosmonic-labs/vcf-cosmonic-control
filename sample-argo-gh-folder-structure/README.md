@@ -11,7 +11,7 @@ This repository demonstrates a sample GitHub folder structure for deploying Cosm
 
 ### Cosmonic Configuration (`cosmonic/`)
 
-**`cosmonic-control.yaml`** - ApplicationSet for deploying the Cosmonic Control Helm chart. Installs Cosmonic Console (UI optional), Nexus (API and NATS server), and Envoy. Only one instance is required per cluster.
+**`cosmonic-control.yaml`** - ApplicationSet for deploying the Cosmonic Control Helm chart. Installs Nexus (API and NATS server), the operator, and Envoy. Only one instance is required per cluster.
 
 **`cosmonic-hostgroup-a.yaml`** - Default Hostgroup configuration for hosting and running WebAssembly workloads. At least one Hostgroup is required per cluster. Multiple Hostgroups can be configured with independent resource allocations.
 
