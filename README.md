@@ -60,7 +60,7 @@ Install Cosmonic Control with a Cluster IP service for the Envoy proxy:
 
 ```bash
 helm install cosmonic-control oci://ghcr.io/cosmonic/cosmonic-control \
-  --version 0.8.1 \
+  --version 0.13.0 \
   --namespace cosmonic-system \
   --create-namespace \
   --set envoy.service.type=ClusterIP \
@@ -86,7 +86,7 @@ helm install cosmonic-control oci://ghcr.io/cosmonic/cosmonic-control \
 
 ```bash
 helm install hostgroup oci://ghcr.io/cosmonic/cosmonic-control-hostgroup \
-  --version 0.8.1 \
+  --version 0.13.0 \
   --namespace cosmonic-system
 ```
 
@@ -108,7 +108,7 @@ For a GitOps-based deployment approach using ArgoCD, see the [sample-argo-gh-fol
 
 ## Deploying WebAssembly Workloads
 
-WebAssembly workloads are deployed by creating an HTTPTrigger resource. Examples are available in the [sample-argo-gh-folder-structure/apps](sample-argo-gh-folder-structure/apps/) folder.
+WebAssembly workloads are deployed by creating a `WorkloadDeployment` that runs the components and a `control.cosmonic.io/v1alpha2` `HTTPTrigger` that routes a hostname and paths to it (Cosmonic Control v0.13.0 or later). Examples are available in the [sample-argo-gh-folder-structure/apps](sample-argo-gh-folder-structure/apps/) folder.
 
 For additional examples and deployment patterns, refer to the [Cosmonic Labs control-demos repository](https://github.com/cosmonic-labs/control-demos).
 
@@ -117,6 +117,6 @@ For additional examples and deployment patterns, refer to the [Cosmonic Labs con
 The welcome-tour demo demonstrates deploying Wasm workloads using Helm. Refer to the [welcome-tour repository](https://github.com/cosmonic-labs/control-demos/tree/main/welcome-tour) for implementation details.
 
 ```bash
-helm install welcome-tour --version 0.1.2 oci://ghcr.io/cosmonic-labs/charts/http-trigger \
+helm install welcome-tour --version 0.2.0 oci://ghcr.io/cosmonic-labs/charts/http-trigger \
   -f https://raw.githubusercontent.com/cosmonic-labs/control-demos/refs/heads/main/welcome-tour/values.http-trigger.yaml
 ```

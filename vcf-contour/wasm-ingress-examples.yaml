@@ -15,7 +15,7 @@ spec:
       - "pathexample.vcf-wasm.cosmonic.world"
   rules:
   # example host for demo.vcf-wasm.cosmonic.world to route to the wasm ingress service for all paths
-  # Note the HTTPTrigger resources must also specify this host to properly route traffic in the ingress:host spec
+  # Note the HTTPTrigger resources must also list this host in spec.hostnames to properly route traffic
   - host: "demo.vcf-wasm.cosmonic.world"
     http:
       paths:
@@ -27,7 +27,7 @@ spec:
             port:
               number: 80
   # example host for pathexample.vcf-wasm.cosmonic.world to route /llm to the wasm ingress service and all other paths to example-service
-  # Note the HTTPTrigger resources must also specify this host to properly route traffic in the ingress:host spec, as well as the /llm path
+  # Note the HTTPTrigger resources must also list this host in spec.hostnames, and match the /llm path in spec.rules[].matches, to properly route traffic
   - host: "pathexample.vcf-wasm.cosmonic.world"
     http:
       paths:

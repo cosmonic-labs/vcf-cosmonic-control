@@ -1,15 +1,10 @@
-apiVersion: control.cosmonic.io/v1alpha1
-kind: HTTPTrigger
+apiVersion: runtime.wasmcloud.dev/v1alpha1
+kind: WorkloadDeployment
 metadata:
   name: welcome-tour-test
   namespace: default
 spec:
   deployPolicy: RollingUpdate
-  ingress:
-    host: welcome-tour.vcf-wasm.cosmonic.world
-    paths:
-    - path: /
-      pathType: Prefix
   replicas: 1
   template:
     spec:
@@ -23,6 +18,12 @@ spec:
         name: welcome-tour
       hostInterfaces:
       - interfaces:
+        - incoming-handler
+        namespace: wasi
+        package: http
+        config:
+          host: welcome-tour.vcf-wasm.cosmonic.world
+      - interfaces:
         - logging
         namespace: wasi
         package: logging
@@ -32,3 +33,19 @@ spec:
         namespace: wasi
         package: config
         version: 0.2.0-rc.1
+---
+apiVersion: control.cosmonic.io/v1alpha2
+kind: HTTPTrigger
+metadata:
+  name: welcome-tour-test
+  namespace: default
+spec:
+  hostnames:
+  - welcome-tour.vcf-wasm.cosmonic.world
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: welcome-tour-test

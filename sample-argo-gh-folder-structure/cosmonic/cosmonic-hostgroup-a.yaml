@@ -22,7 +22,7 @@ spec:
       source:
         chart: cosmonic-control
         repoURL: oci://ghcr.io/cosmonic/cosmonic-control-hostgroup
-        targetRevision: ">=0.8.1"
+        targetRevision: ">=0.13.0"
       destination:
         server: '{{.server}}'
         namespace: cosmonic-system
