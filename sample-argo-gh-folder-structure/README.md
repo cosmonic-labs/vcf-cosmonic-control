@@ -1,6 +1,6 @@
 # ArgoCD GitOps Repository Structure
 
-This repository demonstrates a sample GitHub folder structure for deploying Cosmonic Control and WebAssembly workloads using ArgoCD ApplicationSets and HTTPTrigger custom resources.
+This repository demonstrates a sample GitHub folder structure for deploying Cosmonic Control and WebAssembly workloads using ArgoCD ApplicationSets, WorkloadDeployment resources, and `control.cosmonic.io/v1alpha2` HTTPTrigger custom resources (Cosmonic Control v0.13.0 or later).
 
 ## References
 
@@ -21,6 +21,6 @@ This repository demonstrates a sample GitHub folder structure for deploying Cosm
 
 ### Application Deployments (`apps/`)
 
-**`apps/petstore-mcp/httptrigger.yaml`** - HTTPTrigger resource for the [Petstore-MCP example](https://github.com/cosmonic-labs/control-demos/tree/main/petstore-mcp). Based on the [Model Context Protocol (MCP) TypeScript template](https://github.com/cosmonic-labs/mcp-server-template-ts).
+**`apps/petstore-mcp/httptrigger.yaml`** - WorkloadDeployment and HTTPTrigger resources for the [Petstore-MCP example](https://github.com/cosmonic-labs/control-demos/tree/main/petstore-mcp). Based on the [Model Context Protocol (MCP) TypeScript template](https://github.com/cosmonic-labs/mcp-server-template-ts).
 
-**`apps/wasm-application-demo/httptrigger.yaml`** - HTTPTrigger resource for the [Cosmonic Welcome Tour example](https://github.com/cosmonic-labs/control-demos/tree/main/welcome-tour).
+**`apps/wasm-application-demo/httptrigger.yaml`** - WorkloadDeployment and HTTPTrigger resources for the [Cosmonic Welcome Tour example](https://github.com/cosmonic-labs/control-demos/tree/main/welcome-tour).
